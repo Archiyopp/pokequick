@@ -30,3 +30,7 @@ O correrla en modo producción
 ```bash
 npm run build && npm run preview
 ```
+
+## Despliegue
+
+El despliegue de la aplicación sera bastante sencillo en hostings como [Netlify](https://app.netlify.com) o [Vercel](https://vercel.com), solo sera necesario crear una cuenta en cualquiera de ellos, y posteriormente solo se tendrá que conectar la cuenta de github, y elegir el repositorio requerido.

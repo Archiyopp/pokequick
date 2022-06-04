@@ -1,24 +1,15 @@
 import { PokemonList } from "./components/PokemonList";
 import { AiFillFilter, AiOutlineSearch } from "react-icons/ai";
 import { TypesFilter } from "./components/TypesFilter";
-import { useGetPokemonByNameQuery } from "./services/pokemon";
 import { GenderFilter } from "./components/GenderFilter";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { changeFilter, selectSearchFilter } from "./slices/filterSlice";
+import { ColorFilter } from "./components/ColorFilter";
 
 function App() {
-  const { data: pokemon, isLoading: isLoadingPokemon } =
-    useGetPokemonByNameQuery("pikachu");
-  console.log(pokemon);
-
   return (
-    <div className="text-gray-800">
-      <header className="flex justify-center bg-zinc-100 shadow-md">
-        <div className="flex w-11/12 items-center justify-between py-2 xl:w-9/12">
-          <Logo />
-          <SearchInput />
-        </div>
-      </header>
+    <div className="bg-bwhite text-gray-800">
+      <Header />
       <main className="flex justify-center">
         <div className="w-11/12 xl:w-9/12">
           <div className="grid grid-cols-12">
@@ -41,6 +32,17 @@ function App() {
   );
 }
 
+function Header() {
+  return (
+    <header className="flex justify-center bg-zinc-100 shadow-md">
+      <div className="flex w-11/12 items-center justify-between py-2 xl:w-9/12">
+        <Logo />
+        <SearchInput />
+      </div>
+    </header>
+  );
+}
+
 function Logo() {
   return (
     <div className="flex items-center">
@@ -49,7 +51,9 @@ function Logo() {
         alt="Pikachu"
         className="h-14 mix-blend-darken"
       />
-      <span className="text-2xl font-bold tracking-tight">PokeQuick</span>
+      <span className="logo-text-shadow text-2xl font-bold tracking-tight text-poke-yellow">
+        PokeQuick
+      </span>
     </div>
   );
 }

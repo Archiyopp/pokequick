@@ -1,6 +1,6 @@
 # PokeQuik
 
-Aplicación para la prueba de frontend de la empresa Quick, donde fue requerido el uso de la pokeapi. El demo de la aplicación se encuentra alojado en
+Aplicación para la prueba de frontend de la empresa Quick, donde fue requerido el uso de la pokeapi. El demo de la aplicación se encuentra alojado en [Pokequick](https://pokequick.netlify.app/)
 
 ## Dependencias principales
 

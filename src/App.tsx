@@ -19,6 +19,7 @@ function App() {
                   Filters <AiFillFilter className="inline-block" />{" "}
                 </p>
                 <TypesFilter />
+                <ColorFilter />
                 <GenderFilter />
               </div>
             </section>

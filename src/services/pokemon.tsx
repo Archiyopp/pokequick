@@ -3,6 +3,7 @@ import {
   GendersQueryResult,
   NationalPokedex,
   Pokemon,
+  PokemonColorQueryResult,
   TypesQueryResult,
 } from "./types";
 
@@ -26,6 +27,9 @@ export const pokemonApi = createApi({
     getPokemonGenders: builder.query<GendersQueryResult, void>({
       query: () => "gender",
     }),
+    getPokemonColors: builder.query<PokemonColorQueryResult, void>({
+      query: () => "pokemon-color",
+    }),
   }),
 });
 
@@ -37,4 +41,5 @@ export const {
   useGetPokemonTypesQuery,
   useGetPokemonByIdQuery,
   useGetPokemonGendersQuery,
+  useGetPokemonColorsQuery,
 } = pokemonApi;

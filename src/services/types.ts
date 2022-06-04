@@ -17,17 +17,7 @@ export interface NationalPokedex {
   }[];
 }
 
-export interface TypesQueryResult {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: {
-    name: keyof typeof TYPES_COLORS;
-    url: string;
-  }[];
-}
-
-export interface GendersQueryResult {
+interface CommonPokemonQueryResult {
   count: number;
   next: string | null;
   previous: string | null;
@@ -36,3 +26,14 @@ export interface GendersQueryResult {
     url: string;
   }[];
 }
+
+export type TypesQueryResult = Omit<CommonPokemonQueryResult, "results"> & {
+  results: {
+    name: keyof typeof TYPES_COLORS;
+    url: string;
+  }[];
+};
+
+export type GendersQueryResult = CommonPokemonQueryResult;
+
+export type PokemonColorQueryResult = CommonPokemonQueryResult;

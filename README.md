@@ -1,4 +1,4 @@
-# PokeQuik
+# PokeQuick
 
 Aplicación para la prueba de frontend de la empresa Quick, donde fue requerido el uso de la pokeapi. El demo de la aplicación se encuentra alojado en [Pokequick](https://pokequick.netlify.app/)
 
@@ -8,12 +8,13 @@ Aplicación para la prueba de frontend de la empresa Quick, donde fue requerido 
 - Redux-Toolkit
 - TailwindCSS
 - React Router
+- Headless UI
 
 Usando Vite, Prettier y Eslint para mejor experiencia de desarrollo.
 
 ## Instalación
 
-Se debera clonar el proyecto y abrir una terminal dentro de dicha carpeta, donde se correra el siguiente comando para instalar las dependencias.
+Se deberá clonar el proyecto y abrir una terminal dentro de dicha carpeta, donde se correrá el siguiente comando para instalar las dependencias.
 
 ```bash
 npm install

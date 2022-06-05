@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  dev:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: npm run docker:dev
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"

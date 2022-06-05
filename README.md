@@ -12,7 +12,7 @@ Aplicación para la prueba de frontend de la empresa Quick, donde fue requerido 
 
 Usando Vite, Prettier y Eslint para mejor experiencia de desarrollo.
 
-## Instalación
+## Instalación local
 
 Se deberá clonar el proyecto y abrir una terminal dentro de dicha carpeta, donde se correrá el siguiente comando para instalar las dependencias.
 
@@ -30,6 +30,14 @@ O correrla en modo producción
 
 ```bash
 npm run build && npm run preview
+```
+
+## Docker (experimental)
+
+Similar a la instalación local sera necesario clonar el proyecto, y al abrir la terminal en el proyecto, se usara el siguiente comando.
+
+```bash
+docker compose up
 ```
 
 ## Despliegue

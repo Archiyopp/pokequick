@@ -28,6 +28,9 @@ export interface PokemonSpecies {
   evolves_from_species: NameUrl | null;
   gender_rate: number;
   habitat: NameUrl | null;
+  evolution_chain: {
+    url: string;
+  };
 }
 
 export interface NationalPokedex {
@@ -50,7 +53,7 @@ export interface EvolutionChain {
   chain: {
     is_baby: boolean;
     species: NameUrl;
-    evolves_to?: {
+    evolves_to: {
       evolves_to?: {
         species: species;
       }[];

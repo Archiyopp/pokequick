@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { PokemonByTypeQueryResult, PokemonByGenderQueryResult } from "./types";
+import {
+  PokemonByTypeQueryResult,
+  PokemonByGenderQueryResult,
+  EvolutionChain,
+} from "./types";
 import {
   GendersQueryResult,
   NationalPokedex,
@@ -43,7 +47,7 @@ export const pokemonApi = createApi({
     getPokemonSpeciesById: builder.query<PokemonSpecies, string | number>({
       query: (id) => `pokemon-species/${id}`,
     }),
-    getPokemonEvolutionById: builder.query<Pokemon, number | string>({
+    getPokemonEvolutionById: builder.query<EvolutionChain, number | string>({
       query: (id) => `evolution-chain/${id}`,
     }),
   }),

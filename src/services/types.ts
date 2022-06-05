@@ -2,6 +2,16 @@ import { TYPES_COLORS } from "../constants";
 export interface Pokemon {
   id: number;
   name: string;
+  weight: number;
+  height: number;
+  base_experience: number;
+  types: {
+    slot: number;
+    type: {
+      name: string;
+      url: string;
+    };
+  }[];
 }
 
 export interface NationalPokedex {

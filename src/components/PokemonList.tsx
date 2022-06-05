@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useAppSelector } from "../hooks";
 import { selectSearchFilter } from "../slices/filterSlice";
+import { Link } from "react-router-dom";
 
 interface PokemonProps {
   name: string;
@@ -74,7 +75,10 @@ function PokemonCard({ id, name }: PokemonProps) {
   if (!id) return null;
   const idParam = id.toString().padStart(3, "0");
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg border mix-blend-darken shadow-lg">
+    <Link
+      className="flex flex-col items-center justify-center rounded-lg border mix-blend-darken shadow-lg"
+      to={id.toString()}
+    >
       <div>
         <img
           src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${idParam}.png`}
@@ -85,6 +89,6 @@ function PokemonCard({ id, name }: PokemonProps) {
       <p className="mb-4 font-semibold capitalize tracking-tight sm:text-lg">
         {name}
       </p>
-    </div>
+    </Link>
   );
 }

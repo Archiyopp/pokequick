@@ -43,9 +43,10 @@ export interface NationalPokedex {
   }[];
 }
 
-interface species {
-  name: string;
-  url: string;
+interface Chain {
+  is_baby: boolean;
+  species: NameUrl;
+  evolves_to: Chain[];
 }
 
 export interface EvolutionChain {
@@ -53,12 +54,7 @@ export interface EvolutionChain {
   chain: {
     is_baby: boolean;
     species: NameUrl;
-    evolves_to: {
-      evolves_to?: {
-        species: species;
-      }[];
-      species: species;
-    }[];
+    evolves_to: Chain[];
   };
 }
 

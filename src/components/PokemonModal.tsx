@@ -1,8 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import ContentLoader from "react-content-loader";
-import { useNavigate, useParams } from "react-router-dom";
-import { PokemonSpecies } from "../services/types";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { EvolutionChain, PokemonSpecies } from "../services/types";
 import {
   useGetPokemonByIdQuery,
   useGetPokemonEvolutionByIdQuery,
@@ -179,30 +179,77 @@ function PokemonEvolution({ id }: { id: string }) {
         </p>
       )}
       {evolutionLoading && (
-        <p className="text-center text-lg">Loading evolutions...</p>
+        <p className="text-center text-lg font-semibold">
+          Loading evolutions...
+        </p>
       )}
       {evolutionChain && evolutionChain.chain.evolves_to.length === 0 ? (
         <p>This pokemon does not evolve</p>
       ) : (
-        <div>
+        <div className="flex flex-row flex-wrap items-center justify-center">
           <PokemonAvatar
             pokemonId={evolutionChain?.chain.species.url?.split("/")[6] ?? "1"}
+            name={evolutionChain?.chain.species.name ?? ""}
           />
+          {evolutionChain && (
+            <PokemonEvolutionChain chain={evolutionChain.chain} />
+          )}
         </div>
       )}
     </div>
   );
 }
 
-function PokemonAvatar({ pokemonId }: { pokemonId: string }) {
+function PokemonEvolutionChain({ chain }: { chain: EvolutionChain["chain"] }) {
   return (
-    <div className="h-28 w-28 rounded-full border-2 border-bwhite">
-      <img
-        src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId.padStart(
-          3,
-          "0"
-        )}.png`}
-      />
+    <>
+      {chain.evolves_to.length > 0 && (
+        <span className="mx-5 -translate-y-5 text-8xl text-white">{">"}</span>
+      )}
+      <div
+        className={`grid ${
+          chain.evolves_to.length > 1 ? "grid-rows-2" : "grid-rows-1"
+        } gap-y-6`}
+      >
+        {chain.evolves_to.map((evolves) => (
+          <PokemonAvatar
+            key={evolves.species.name}
+            pokemonId={evolves.species.url?.split("/")[6] ?? "1"}
+            name={evolves.species.name}
+          />
+        ))}
+      </div>
+      {chain.evolves_to.map((evolves) => (
+        <PokemonEvolutionChain key={evolves.species.name} chain={evolves} />
+      ))}
+    </>
+  );
+}
+
+function PokemonAvatar({
+  pokemonId,
+  name,
+}: {
+  pokemonId: string;
+  name: string;
+}) {
+  return (
+    <div className="flex flex-col items-center">
+      <Link
+        className="block h-28 w-28 rounded-full border-4 border-bwhite shadow-md"
+        to={`/${pokemonId}`}
+      >
+        <img
+          src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId.padStart(
+            3,
+            "0"
+          )}.png`}
+        />
+      </Link>
+      <p className="text-lg capitalize text-gray-700">
+        {name}{" "}
+        <span className="text-gray-500">#{pokemonId.padStart(3, "0")}</span>
+      </p>
     </div>
   );
 }

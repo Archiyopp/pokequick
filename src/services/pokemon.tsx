@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { PokemonByTypeQueryResult, PokemonByGenderQueryResult } from "./types";
 import {
   GendersQueryResult,
   NationalPokedex,
   Pokemon,
   PokemonColorQueryResult,
+  PokemonSpecies,
   TypesQueryResult,
 } from "./types";
 
@@ -18,14 +20,31 @@ export const pokemonApi = createApi({
     getPokemonTypes: builder.query<TypesQueryResult, void>({
       query: () => `type`,
     }),
+    getPokemonsByType: builder.query<PokemonByTypeQueryResult, string | number>(
+      {
+        query: (type) => `type/${type}`,
+      }
+    ),
     getPokemonById: builder.query<Pokemon, number | string>({
       query: (id) => `pokemon/${id}`,
     }),
     getPokemonGenders: builder.query<GendersQueryResult, void>({
       query: () => "gender",
     }),
+    getPokemonsByGender: builder.query<
+      PokemonByGenderQueryResult,
+      string | number
+    >({
+      query: (gender) => `gender/${gender}`,
+    }),
     getPokemonColors: builder.query<PokemonColorQueryResult, void>({
       query: () => "pokemon-color",
+    }),
+    getPokemonSpeciesById: builder.query<PokemonSpecies, string | number>({
+      query: (id) => `pokemon-species/${id}`,
+    }),
+    getPokemonEvolution: builder.query<Pokemon, number | string>({
+      query: (id) => `evolution-chain/${id}`,
     }),
   }),
 });
@@ -38,4 +57,7 @@ export const {
   useGetPokemonByIdQuery,
   useGetPokemonGendersQuery,
   useGetPokemonColorsQuery,
+  useGetPokemonSpeciesByIdQuery,
+  useLazyGetPokemonsByTypeQuery,
+  useLazyGetPokemonsByGenderQuery,
 } = pokemonApi;

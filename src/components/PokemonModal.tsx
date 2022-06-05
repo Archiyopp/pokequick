@@ -24,14 +24,11 @@ export function PokemonModal() {
     isLoading: speciesLoading,
     isError: speciesError,
   } = useGetPokemonSpeciesByIdQuery(pokemonId);
-  const {
-    data: evolutionChain,
-    isLoading: evolutionLoading,
-    isError: evolutionError,
-  } = useGetPokemonEvolutionByIdQuery(pokemonId);
-  console.log(pokemonData, speciesData);
+
   const isLoading = isLoadingPokemon || speciesLoading;
   const isError = isErrorPokemon || speciesError;
+  const evolutionChainUrl = speciesData?.evolution_chain?.url;
+  const evolutionChainId = evolutionChainUrl?.split("/")[6];
   if (isError) return null;
 
   return (
@@ -161,17 +158,52 @@ export function PokemonModal() {
           )}
         </div>
       </div>
-      <div className="bg-gray-300 p-6">
-        {evolutionError && (
-          <p className="text-center text-lg text-red-500">
-            Error when searching its evolutions
-          </p>
-        )}
-        {evolutionLoading && (
-          <p className="text-center text-lg">Loading evolutions...</p>
-        )}
-      </div>
+      {/* Avoid typescript error with empty <> */}
+      <>{evolutionChainId && <PokemonEvolution id={evolutionChainId} />}</>
     </Modal>
+  );
+}
+
+function PokemonEvolution({ id }: { id: string }) {
+  const {
+    data: evolutionChain,
+    isLoading: evolutionLoading,
+    isError: evolutionError,
+  } = useGetPokemonEvolutionByIdQuery(id);
+  return (
+    <div className="bg-gray-300 p-6">
+      <h2 className="mb-4 text-xl font-bold tracking-tight">Evolution</h2>
+      {evolutionError && (
+        <p className="text-center text-lg text-red-500">
+          Error when searching its evolutions
+        </p>
+      )}
+      {evolutionLoading && (
+        <p className="text-center text-lg">Loading evolutions...</p>
+      )}
+      {evolutionChain && evolutionChain.chain.evolves_to.length === 0 ? (
+        <p>This pokemon does not evolve</p>
+      ) : (
+        <div>
+          <PokemonAvatar
+            pokemonId={evolutionChain?.chain.species.url?.split("/")[6] ?? "1"}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PokemonAvatar({ pokemonId }: { pokemonId: string }) {
+  return (
+    <div className="h-28 w-28 rounded-full border-2 border-bwhite">
+      <img
+        src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId.padStart(
+          3,
+          "0"
+        )}.png`}
+      />
+    </div>
   );
 }
 

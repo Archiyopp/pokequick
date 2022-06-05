@@ -171,7 +171,7 @@ function PokemonEvolution({ id }: { id: string }) {
     isError: evolutionError,
   } = useGetPokemonEvolutionByIdQuery(id);
   return (
-    <div className="bg-gray-300 p-6">
+    <div className="evolution-bg p-6 text-bwhite">
       <h2 className="mb-4 text-xl font-bold tracking-tight">Evolution</h2>
       {evolutionError && (
         <p className="text-center text-lg text-red-500">
@@ -184,7 +184,7 @@ function PokemonEvolution({ id }: { id: string }) {
         </p>
       )}
       {evolutionChain && evolutionChain.chain.evolves_to.length === 0 ? (
-        <p>This pokemon does not evolve</p>
+        <p className="">This pokemon does not evolve</p>
       ) : (
         <div className="flex flex-row flex-wrap items-center justify-center">
           <PokemonAvatar
@@ -209,7 +209,7 @@ function PokemonEvolutionChain({ chain }: { chain: EvolutionChain["chain"] }) {
       <div
         className={`grid ${
           chain.evolves_to.length > 1 ? "grid-rows-2" : "grid-rows-1"
-        } gap-y-6`}
+        } grid-flow-col gap-y-6 gap-x-4`}
       >
         {chain.evolves_to.map((evolves) => (
           <PokemonAvatar
@@ -236,7 +236,7 @@ function PokemonAvatar({
   return (
     <div className="flex flex-col items-center">
       <Link
-        className="block h-28 w-28 rounded-full border-4 border-bwhite shadow-md"
+        className="block h-32 w-32 rounded-full border-4 border-bwhite p-2 shadow-md"
         to={`/${pokemonId}`}
       >
         <img
@@ -244,11 +244,13 @@ function PokemonAvatar({
             3,
             "0"
           )}.png`}
+          height="215"
+          width="215"
         />
       </Link>
-      <p className="text-lg capitalize text-gray-700">
+      <p className="text-lg capitalize text-gray-200">
         {name}{" "}
-        <span className="text-gray-500">#{pokemonId.padStart(3, "0")}</span>
+        <span className="text-gray-300">#{pokemonId.padStart(3, "0")}</span>
       </p>
     </div>
   );

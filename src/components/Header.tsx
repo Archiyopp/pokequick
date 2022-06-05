@@ -1,6 +1,11 @@
 import { AiOutlineSearch } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { changeFilter, selectSearchFilter } from "../slices/filterSlice";
+import {
+  changeFilter,
+  resetFilters,
+  selectSearchFilter,
+} from "../slices/filterSlice";
 
 export function Header() {
   return (
@@ -14,8 +19,16 @@ export function Header() {
 }
 
 function Logo() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   return (
-    <div className="flex items-center">
+    <button
+      className="flex items-center"
+      onClick={() => {
+        dispatch(resetFilters());
+        navigate("/");
+      }}
+    >
       <img
         src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/025.png"
         alt="Pikachu"
@@ -24,7 +37,7 @@ function Logo() {
       <span className="logo-text-shadow text-2xl font-bold tracking-tight text-poke-yellow">
         PokeQuick
       </span>
-    </div>
+    </button>
   );
 }
 

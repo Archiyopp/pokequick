@@ -42,6 +42,7 @@ export const {
   changeGender,
   changeType,
   incrementNumberOfVisiblePokemons,
+  resetFilters,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from "@reduxjs/toolkit/query";
 import filterReducer from "./slices/filterSlice";
+import idsReducer from "./slices/idsSlice";
 import { pokemonApi } from "./services/pokemon";
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     // Add the generated reducer as a specific top-level slice
     [pokemonApi.reducerPath]: pokemonApi.reducer,
     filter: filterReducer,
+    ids: idsReducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.

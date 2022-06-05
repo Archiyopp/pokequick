@@ -9,7 +9,7 @@ export function ColorFilter() {
   return (
     <div className="">
       <p className="pt-4">Colors</p>
-      <div className="mt-4 mr-4 flex flex-wrap gap-3">
+      <div className="mt-4 mr-4 flex flex-wrap gap-6">
         {data?.results.map((color) => (
           <ColorButton color={color.name} url={color.url} key={color.name} />
         ))}
@@ -27,11 +27,9 @@ function ColorButton({ color, url }: ColorProps) {
   const [selected, setSelected] = useState(false);
   return (
     <button
-      className={`h-6 w-6 rounded-sm ${
-        selected
-          ? "border-b-4 border-poke-blue shadow-md"
-          : "border border-gray-300"
-      } shadow-md`}
+      className={`h-7 w-7 rounded-sm shadow-md ${
+        selected ? "scale-125 outline" : "opacity-80"
+      }`}
       style={{ backgroundColor: color }}
       onClick={() => setSelected(!selected)}
     ></button>

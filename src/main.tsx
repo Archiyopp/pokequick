@@ -1,4 +1,4 @@
-import React from "react";
+import { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
@@ -7,11 +7,17 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <Suspense
+      fallback={
+        <p className="my-3 h-full text-center text-3xl font-bold tracking-tight">
+          Loading...
+        </p>
+      }
+    >
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+    </Suspense>
+  </Provider>
 );

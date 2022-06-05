@@ -27,7 +27,7 @@ export interface PokemonSpecies {
   }[];
   evolves_from_species: NameUrl | null;
   gender_rate: number;
-  habitat: NameUrl;
+  habitat: NameUrl | null;
 }
 
 export interface NationalPokedex {

@@ -3,8 +3,10 @@ import { useAppSelector, useAppDispatch, useGetPokemons } from "../hooks";
 import {
   incrementNumberOfVisiblePokemons,
   selectSearchFilter,
+  selectTypeFilter,
 } from "../slices/filterSlice";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 interface PokemonProps {
   name: string;
@@ -18,9 +20,20 @@ export function PokemonList() {
     pokemons,
     numberOfVisiblePokemons,
     isError,
+    typeQueryTrigger,
   } = useGetPokemons();
   const dispatch = useAppDispatch();
   const searchFilter = useAppSelector(selectSearchFilter);
+  const typeId = useAppSelector((state) => state.ids.filter);
+  const typeFilter = useAppSelector(selectTypeFilter);
+
+  // trigger in this component, when typeFilter changes, cant trigger on TypeFilter component
+  // because it doesnt work, not sure why
+  useEffect(() => {
+    if (typeId) {
+      typeQueryTrigger(typeId, true);
+    }
+  }, [typeId]);
 
   if (isLoading)
     return (
@@ -47,7 +60,8 @@ export function PokemonList() {
         {pokemons.length === 0 && (
           <div className="col-span-3">
             <p className="mb-6 text-lg font-semibold tracking-tight">
-              No pokemon found with the search term {searchFilter}
+              No pokemon found with the search term {searchFilter}{" "}
+              {typeFilter && `and type ${typeFilter}`}
             </p>
           </div>
         )}

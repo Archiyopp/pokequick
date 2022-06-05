@@ -22,7 +22,11 @@ export const filterSlice = createSlice({
       state.numberOfVisiblePokemons = 20;
     },
     changeType(state, action: PayloadAction<string>) {
-      state.type = action.payload;
+      if (state.type === action.payload) {
+        state.type = "";
+      } else {
+        state.type = action.payload;
+      }
       state.numberOfVisiblePokemons = 20;
     },
     incrementNumberOfVisiblePokemons(state) {

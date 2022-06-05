@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PokemonSpecies } from "../services/types";
 import {
   useGetPokemonByIdQuery,
+  useGetPokemonEvolutionByIdQuery,
   useGetPokemonSpeciesByIdQuery,
 } from "../services/pokemon";
 import { TYPES_COLORS } from "../constants";
@@ -23,6 +24,11 @@ export function PokemonModal() {
     isLoading: speciesLoading,
     isError: speciesError,
   } = useGetPokemonSpeciesByIdQuery(pokemonId);
+  const {
+    data: evolutionChain,
+    isLoading: evolutionLoading,
+    isError: evolutionError,
+  } = useGetPokemonEvolutionByIdQuery(pokemonId);
   console.log(pokemonData, speciesData);
   const isLoading = isLoadingPokemon || speciesLoading;
   const isError = isErrorPokemon || speciesError;
@@ -30,7 +36,7 @@ export function PokemonModal() {
 
   return (
     <Modal>
-      <div className="grid grid-cols-2 p-6">
+      <div className="grid grid-cols-2 gap-4 p-6">
         <img
           src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemonId.padStart(
             3,
@@ -68,7 +74,7 @@ export function PokemonModal() {
                             className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900"
                             scope="col"
                           >
-                            Category
+                            Characteristic
                           </th>
                           <th
                             className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900"
@@ -88,6 +94,14 @@ export function PokemonModal() {
                           category="Weight"
                           value={pokemonData.weight}
                           valueLabel="kg"
+                        />
+                        <PokemonTableRow
+                          category="Category"
+                          value={
+                            pokemonData.types.length > 0
+                              ? pokemonData.types[0].type.name
+                              : ""
+                          }
                         />
                         {speciesData && (
                           <>
@@ -113,7 +127,11 @@ export function PokemonModal() {
                             />
                             <PokemonTableRow
                               category="Habitat"
-                              value={speciesData.habitat.name}
+                              value={
+                                speciesData.habitat
+                                  ? speciesData.habitat.name
+                                  : ""
+                              }
                             />
                           </>
                         )}
@@ -143,7 +161,16 @@ export function PokemonModal() {
           )}
         </div>
       </div>
-      <div className="bg-gray-300 p-6"></div>
+      <div className="bg-gray-300 p-6">
+        {evolutionError && (
+          <p className="text-center text-lg text-red-500">
+            Error when searching its evolutions
+          </p>
+        )}
+        {evolutionLoading && (
+          <p className="text-center text-lg">Loading evolutions...</p>
+        )}
+      </div>
     </Modal>
   );
 }
@@ -195,8 +222,8 @@ function MyLoader() {
     <ContentLoader
       speed={2}
       width={400}
-      height={160}
-      viewBox="0 0 400 160"
+      height={290}
+      viewBox="0 0 400 290"
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
     >
@@ -204,9 +231,9 @@ function MyLoader() {
       <rect x="0" y="56" rx="3" ry="3" width="410" height="6" />
       <rect x="0" y="72" rx="3" ry="3" width="380" height="6" />
       <circle cx="128" cy="15" r="14" />
-      <rect x="0" y="115" rx="0" ry="0" width="400" height="35" />
-      <rect x="0" y="165" rx="0" ry="0" width="400" height="25" />
-      <rect x="0" y="215" rx="0" ry="0" width="400" height="25" />
+      <rect x="0" y="100" rx="0" ry="0" width="400" height="35" />
+      <rect x="0" y="170" rx="0" ry="0" width="400" height="35" />
+      <rect x="0" y="240" rx="0" ry="0" width="400" height="35" />
     </ContentLoader>
   );
 }
@@ -241,7 +268,7 @@ function Modal({ children }: { children: JSX.Element | JSX.Element[] }) {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={`max-w-4xl transform overflow-hidden rounded-md bg-bwhite text-left align-middle shadow-xl transition-all`}
+                className={`max-w-5xl transform overflow-hidden rounded-md bg-bwhite text-left align-middle shadow-xl transition-all`}
               >
                 {children}
               </Dialog.Panel>

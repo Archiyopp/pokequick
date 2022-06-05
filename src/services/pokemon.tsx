@@ -43,7 +43,7 @@ export const pokemonApi = createApi({
     getPokemonSpeciesById: builder.query<PokemonSpecies, string | number>({
       query: (id) => `pokemon-species/${id}`,
     }),
-    getPokemonEvolution: builder.query<Pokemon, number | string>({
+    getPokemonEvolutionById: builder.query<Pokemon, number | string>({
       query: (id) => `evolution-chain/${id}`,
     }),
   }),
@@ -60,4 +60,10 @@ export const {
   useGetPokemonSpeciesByIdQuery,
   useLazyGetPokemonsByTypeQuery,
   useLazyGetPokemonsByGenderQuery,
+  useGetPokemonEvolutionByIdQuery,
+  endpoints: {
+    getPokemonsByType: {
+      useLazyQuerySubscription: useLazyGetPokemonsByTypeQuerySubscription,
+    },
+  },
 } = pokemonApi;

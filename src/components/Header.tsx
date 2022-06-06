@@ -1,6 +1,6 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector, useGetPokemons } from "../hooks";
 import {
   changeFilter,
   resetFilters,
@@ -43,20 +43,34 @@ function Logo() {
 
 function SearchInput() {
   const dispatch = useAppDispatch();
+  const { filteredPokemons } = useGetPokemons();
   const filter = useAppSelector(selectSearchFilter);
   return (
-    <label htmlFor="search" className="relative">
-      <span className="sr-only">search</span>
-      <input
-        type="text"
-        name="search"
-        id="search"
-        className="h-7 w-40 rounded-xl border px-1 pl-8 md:w-52 lg:w-64"
-        placeholder="search"
-        value={filter}
-        onChange={({ target }) => dispatch(changeFilter(target.value))}
-      />
-      <AiOutlineSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-lg" />
-    </label>
+    <>
+      <label htmlFor="search" className="relative">
+        <span className="sr-only">search</span>
+        <input
+          type="text"
+          name="search"
+          id="search"
+          className="h-7 w-40 rounded-xl border px-1 pl-8 md:w-52 lg:w-64"
+          placeholder="search"
+          value={filter}
+          onChange={({ target }) => dispatch(changeFilter(target.value))}
+          list="pokemon-options"
+        />
+        <AiOutlineSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-lg" />
+      </label>
+      {filteredPokemons && (
+        <datalist id="pokemon-options">
+          {filteredPokemons.map((pokemon) => (
+            <option
+              key={pokemon.pokemon_species.name}
+              value={pokemon.pokemon_species.name}
+            />
+          ))}
+        </datalist>
+      )}
+    </>
   );
 }

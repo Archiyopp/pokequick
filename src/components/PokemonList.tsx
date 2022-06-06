@@ -79,7 +79,7 @@ export function PokemonList() {
         <div className="mt-6 flex items-center justify-center">
           <button
             onClick={() => dispatch(incrementNumberOfVisiblePokemons())}
-            className="mb-6 rounded-lg bg-zinc-100 py-2 px-4 font-bold uppercase transition-colors hover:bg-zinc-200 active:outline active:outline-1"
+            className="mb-6 rounded-lg bg-zinc-200 py-2 px-4 font-bold uppercase transition-colors hover:bg-zinc-300 active:outline active:outline-1"
           >
             Load more
           </button>

@@ -9,7 +9,6 @@ export function TypesFilter() {
   const { data, isLoading, isError } = useGetPokemonTypesQuery();
   const dispatch = useAppDispatch();
   const typeFilter = useAppSelector(selectTypeFilter);
-  console.log(typeFilter);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeType(e.target.value));
     if (data && e.target.value !== typeFilter) {

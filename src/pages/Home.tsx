@@ -4,6 +4,8 @@ import { ColorFilter } from "../components/ColorFilter";
 import { GenderFilter } from "../components/GenderFilter";
 import { PokemonList } from "../components/PokemonList";
 import { TypesFilter } from "../components/TypesFilter";
+import { useAppDispatch } from "../hooks";
+import { resetFilters } from "../slices/filterSlice";
 
 export function Home() {
   return (
@@ -19,6 +21,7 @@ export function Home() {
 }
 
 function FilterSection() {
+  const dispatch = useAppDispatch();
   return (
     <section className="col-span-3 border-r-2">
       <div className="grid grid-cols-1 gap-4 divide-y">
@@ -28,6 +31,15 @@ function FilterSection() {
         <TypesFilter />
         <ColorFilter />
         <GenderFilter />
+        <div className="flex items-center justify-center pt-4">
+          <button
+            className="mb-6 rounded-lg bg-zinc-200 py-2 px-4 font-bold uppercase transition-colors hover:bg-zinc-300 active:outline active:outline-1"
+            type="button"
+            onClick={() => dispatch(resetFilters())}
+          >
+            Reset filters
+          </button>
+        </div>
       </div>
       <Outlet />
     </section>

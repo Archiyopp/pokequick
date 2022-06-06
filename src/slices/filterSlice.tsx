@@ -29,6 +29,14 @@ export const filterSlice = createSlice({
       }
       state.numberOfVisiblePokemons = 20;
     },
+    changeColor(state, action: PayloadAction<string>) {
+      if (state.color === action.payload) {
+        state.color = "";
+      } else {
+        state.color = action.payload;
+      }
+      state.numberOfVisiblePokemons = 20;
+    },
     incrementNumberOfVisiblePokemons(state) {
       state.numberOfVisiblePokemons += 20;
     },
@@ -43,6 +51,7 @@ export const {
   changeType,
   incrementNumberOfVisiblePokemons,
   resetFilters,
+  changeColor,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
@@ -52,6 +61,8 @@ export const selectSearchFilter = (state: RootState) => state.filter.search;
 export const selectGenderFilter = (state: RootState) => state.filter.gender;
 
 export const selectTypeFilter = (state: RootState) => state.filter.type;
+
+export const selectColorFilter = (state: RootState) => state.filter.color;
 
 export const selectNumberOfVisiblePokemons = (state: RootState) =>
   state.filter.numberOfVisiblePokemons;

@@ -93,3 +93,9 @@ export interface PokemonByGenderQueryResult {
     rate: number;
   }[];
 }
+
+export interface PokemonByColorQueryResult {
+  name: string;
+  id: number;
+  pokemon_species: NameUrl[];
+}

@@ -1,6 +1,7 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "./store";
 import {
+  selectColorFilter,
   selectGenderFilter,
   selectNumberOfVisiblePokemons,
   selectSearchFilter,
@@ -8,6 +9,7 @@ import {
 } from "./slices/filterSlice";
 import {
   useGetPokemonsQuery,
+  useLazyGetPokemonsByColorQuery,
   useLazyGetPokemonsByGenderQuery,
   useLazyGetPokemonsByTypeQuery,
 } from "./services/pokemon";
@@ -23,6 +25,7 @@ export const useGetPokemons = () => {
   const searchFilter = useAppSelector(selectSearchFilter);
   const typeFilter = useAppSelector(selectTypeFilter);
   const genderFilter = useAppSelector(selectGenderFilter);
+  const colorFilter = useAppSelector(selectColorFilter);
 
   // FETCH_POKEMONS
   const {
@@ -52,6 +55,16 @@ export const useGetPokemons = () => {
     },
   ] = useLazyGetPokemonsByGenderQuery();
 
+  const [
+    colorQueryTrigger,
+    {
+      data: pokemonsByColorData,
+      isLoading: pokemonByColorLoading,
+      isError: pokemonByColorError,
+      isFetching: pokemonByColorFetching,
+    },
+  ] = useLazyGetPokemonsByColorQuery();
+
   const objectWithPokemonNames: {
     [pokemon: string]: { type: boolean; gender: boolean; color: boolean };
   } = {};
@@ -76,6 +89,15 @@ export const useGetPokemons = () => {
     }
   }
 
+  if (colorFilter && pokemonsByColorData) {
+    for (const pokemon of pokemonsByColorData.pokemon_species) {
+      if (!objectWithPokemonNames[pokemon.name]) {
+        objectWithPokemonNames[pokemon.name] = getInitObj();
+      }
+      objectWithPokemonNames[pokemon.name].color = true;
+    }
+  }
+
   const initialPokemons = pokemonData?.pokemon_entries;
 
   const filteredPokemons = initialPokemons?.filter((entry) => {
@@ -88,6 +110,9 @@ export const useGetPokemons = () => {
     if (genderFilter !== "all" && pokemonsByGenderData) {
       if (!objectWithPokemonNames[name]?.gender) return false;
     }
+    if (colorFilter && pokemonsByColorData) {
+      if (!objectWithPokemonNames[name]?.color) return false;
+    }
 
     if (Number.isNaN(Number.parseInt(searchFilter))) {
       return name.toLowerCase().includes(searchFilter.toLowerCase());
@@ -97,9 +122,16 @@ export const useGetPokemons = () => {
 
   const pokemons = filteredPokemons?.slice(0, numberOfVisiblePokemons);
 
-  const isLoading = isLoadingPokemon || pokemonsByTypeLoading;
-  const isError = isPokemonError || pokemonsByTypeError;
-  const isFetching = isFetchingPokemon || pokemonsByTypeFetching;
+  const isLoading =
+    isLoadingPokemon ||
+    pokemonsByTypeLoading ||
+    pokemonByGenderLoading ||
+    pokemonByColorLoading;
+
+  const isError = isPokemonError || pokemonsByTypeError || pokemonByGenderError;
+  const isFetching =
+    isFetchingPokemon || pokemonsByTypeFetching || pokemonByGenderFetching;
+
   return {
     pokemons,
     isLoading,
@@ -108,6 +140,7 @@ export const useGetPokemons = () => {
     numberOfVisiblePokemons,
     typeQueryTrigger,
     genderQueryTrigger,
+    colorQueryTrigger,
     pokemonsByTypeData,
     isFetching,
   };

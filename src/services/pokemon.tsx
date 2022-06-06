@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { PokemonByColorQueryResult } from "./types";
 import {
   PokemonByTypeQueryResult,
   PokemonByGenderQueryResult,
@@ -44,6 +45,9 @@ export const pokemonApi = createApi({
     getPokemonColors: builder.query<PokemonColorQueryResult, void>({
       query: () => "pokemon-color",
     }),
+    getPokemonsByColor: builder.query<PokemonByColorQueryResult, string>({
+      query: (color) => `pokemon-color/${color}`,
+    }),
     getPokemonSpeciesById: builder.query<PokemonSpecies, string | number>({
       query: (id) => `pokemon-species/${id}`,
     }),
@@ -65,9 +69,5 @@ export const {
   useLazyGetPokemonsByTypeQuery,
   useLazyGetPokemonsByGenderQuery,
   useGetPokemonEvolutionByIdQuery,
-  endpoints: {
-    getPokemonsByType: {
-      useLazyQuerySubscription: useLazyGetPokemonsByTypeQuerySubscription,
-    },
-  },
+  useLazyGetPokemonsByColorQuery,
 } = pokemonApi;

@@ -23,12 +23,14 @@ export function PokemonList() {
     isError,
     typeQueryTrigger,
     genderQueryTrigger,
+    colorQueryTrigger,
   } = useGetPokemons();
   const dispatch = useAppDispatch();
   const searchFilter = useAppSelector(selectSearchFilter);
   const typeId = useAppSelector((state) => state.ids.filter);
   const typeFilter = useAppSelector(selectTypeFilter);
   const genderFilter = useAppSelector(selectGenderFilter);
+  const colorFilter = useAppSelector((state) => state.filter.color);
 
   // trigger in this component, when typeFilter changes, cant trigger on TypeFilter component
   // because it doesnt work, not sure why
@@ -43,6 +45,12 @@ export function PokemonList() {
       genderQueryTrigger(genderFilter, true);
     }
   }, [genderFilter]);
+
+  useEffect(() => {
+    if (colorFilter !== "") {
+      colorQueryTrigger(colorFilter, true);
+    }
+  }, [colorFilter]);
 
   if (isLoading)
     return (

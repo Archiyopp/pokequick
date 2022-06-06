@@ -1,5 +1,7 @@
 import { useGetPokemonColorsQuery } from "../services/pokemon";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { changeColor, selectColorFilter } from "../slices/filterSlice";
 
 export function ColorFilter() {
   const { data, isLoading, isError } = useGetPokemonColorsQuery();
@@ -11,7 +13,7 @@ export function ColorFilter() {
       <p className="pt-4">Colors</p>
       <div className="mt-4 mr-4 flex flex-wrap gap-6">
         {data?.results.map((color) => (
-          <ColorButton color={color.name} url={color.url} key={color.name} />
+          <ColorButton color={color.name} key={color.name} />
         ))}
       </div>
     </div>
@@ -20,18 +22,18 @@ export function ColorFilter() {
 
 interface ColorProps {
   color: string;
-  url: string;
 }
 
-function ColorButton({ color, url }: ColorProps) {
-  const [selected, setSelected] = useState(false);
+function ColorButton({ color }: ColorProps) {
+  const colorFilter = useAppSelector(selectColorFilter);
+  const dispatch = useAppDispatch();
   return (
     <button
       className={`h-7 w-7 rounded-sm shadow-md ${
-        selected ? "scale-125 outline" : "opacity-80"
+        color === colorFilter ? "scale-125 outline" : "opacity-80"
       }`}
       style={{ backgroundColor: color }}
-      onClick={() => setSelected(!selected)}
+      onClick={() => dispatch(changeColor(color))}
     ></button>
   );
 }

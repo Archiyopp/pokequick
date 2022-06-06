@@ -4,10 +4,11 @@ import { ColorFilter } from "../components/ColorFilter";
 import { GenderFilter } from "../components/GenderFilter";
 import { PokemonList } from "../components/PokemonList";
 import { TypesFilter } from "../components/TypesFilter";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch, useDocumentTitle } from "../hooks";
 import { resetFilters } from "../slices/filterSlice";
 
 export function Home() {
+  useDocumentTitle("Home");
   return (
     <div className="w-11/12 xl:w-9/12">
       <div className="grid grid-cols-12">

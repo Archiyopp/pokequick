@@ -13,12 +13,17 @@ import {
   useLazyGetPokemonsByGenderQuery,
   useLazyGetPokemonsByTypeQuery,
 } from "./services/pokemon";
+import { useLayoutEffect } from "react";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-// export const useGetPokemons
+export const useDocumentTitle = (title: string) => {
+  useLayoutEffect(() => {
+    document.title = `Pokequick - ${title}`;
+  }, [title]);
+};
 
 export const useGetPokemons = () => {
   const numberOfVisiblePokemons = useAppSelector(selectNumberOfVisiblePokemons);

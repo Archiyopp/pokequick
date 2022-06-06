@@ -10,17 +10,22 @@ import {
 } from "../services/pokemon";
 import { TYPES_COLORS } from "../constants";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { useDocumentTitle } from "../hooks";
 
 export function PokemonModal() {
   const pokemonId = useParams()?.id;
   const navigate = useNavigate();
-  if (!pokemonId) return null;
-  if (Number.isNaN(Number.parseInt(pokemonId))) return null;
+
+  if (!pokemonId || Number.isNaN(Number.parseInt(pokemonId))) return null;
+
   const {
     data: pokemonData,
     isLoading: isLoadingPokemon,
     isError: isErrorPokemon,
   } = useGetPokemonByIdQuery(pokemonId);
+  useDocumentTitle(
+    pokemonData?.name.trim().replace(/^\w/, (c) => c.toUpperCase()) ?? "Pokemon"
+  );
   const {
     data: speciesData,
     isLoading: speciesLoading,
@@ -35,7 +40,7 @@ export function PokemonModal() {
 
   return (
     <Modal>
-      <div className="grid grid-cols-2 gap-4 p-6">
+      <div className="grid gap-4 p-6 sm:grid-cols-2">
         <img
           src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemonId.padStart(
             3,

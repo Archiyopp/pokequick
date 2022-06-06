@@ -10,7 +10,7 @@ export function ColorFilter() {
   console.log(data);
   return (
     <div className="">
-      <p className="pt-4">Colors</p>
+      <p className="pt-4 font-semibold">Color</p>
       <div className="mt-4 mr-4 flex flex-wrap gap-6">
         {data?.results.map((color) => (
           <ColorButton color={color.name} key={color.name} />

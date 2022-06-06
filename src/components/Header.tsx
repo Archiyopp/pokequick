@@ -51,12 +51,12 @@ function SearchInput() {
         type="text"
         name="search"
         id="search"
-        className="h-7 w-40 rounded-xl border px-1 pl-6 md:w-52 lg:w-64"
+        className="h-7 w-40 rounded-xl border px-1 pl-8 md:w-52 lg:w-64"
         placeholder="search"
         value={filter}
         onChange={({ target }) => dispatch(changeFilter(target.value))}
       />
-      <AiOutlineSearch className="absolute left-1 top-1/2 -translate-y-1/2 text-lg" />
+      <AiOutlineSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-lg" />
     </label>
   );
 }

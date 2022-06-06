@@ -13,7 +13,7 @@ export function GenderFilter() {
   };
   return (
     <div className="flex flex-col gap-1  pt-4">
-      <p className="mb-2 font-medium">Gender</p>
+      <p className="mb-2 font-semibold">Gender</p>
       <label htmlFor="all">
         <input
           type="radio"

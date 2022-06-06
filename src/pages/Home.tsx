@@ -25,7 +25,7 @@ function FilterSection() {
   return (
     <section className="col-span-3 border-r-2">
       <div className="grid grid-cols-1 gap-4 divide-y">
-        <p className="mt-2 pt-2 text-lg font-medium">
+        <p className="mt-2 pt-2 text-lg font-semibold">
           Filters <AiFillFilter className="inline-block" />{" "}
         </p>
         <TypesFilter />

@@ -9,9 +9,11 @@ import {
   useGetPokemonSpeciesByIdQuery,
 } from "../services/pokemon";
 import { TYPES_COLORS } from "../constants";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 export function PokemonModal() {
   const pokemonId = useParams()?.id;
+  const navigate = useNavigate();
   if (!pokemonId) return null;
   if (Number.isNaN(Number.parseInt(pokemonId))) return null;
   const {
@@ -43,6 +45,13 @@ export function PokemonModal() {
           height="475"
         />
         <div>
+          <button
+            className="float-right translate-x-3 rounded-full text-gray-400 transition-colors hover:text-gray-500 focus:outline"
+            type="button"
+            onClick={() => navigate("/")}
+          >
+            <AiFillCloseCircle className="text-xl" />
+          </button>
           {isLoading ? (
             <MyLoader />
           ) : (
@@ -56,6 +65,7 @@ export function PokemonModal() {
                   #{pokemonId.padStart(3, "0")}
                 </span>
               </Dialog.Title>
+
               {speciesData && speciesData.flavor_text_entries.length > 0 && (
                 <PokemonDescription
                   flavor_text_entries={speciesData.flavor_text_entries}

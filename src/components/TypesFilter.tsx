@@ -29,7 +29,7 @@ export function TypesFilter() {
   if (!data) return null;
   return (
     <div className="pt-4">
-      <p className="mb-4 font-medium">Type:</p>
+      <p className="mb-4 font-semibold">Type</p>
       <div className="grid gap-y-2 lg:grid-cols-2">
         {data.results.map((type) => (
           <label

@@ -102,7 +102,7 @@ function PokemonCard({ id, name }: PokemonProps) {
   const idParam = id.toString().padStart(3, "0");
   return (
     <Link
-      className="relative flex flex-col items-center justify-center overflow-hidden rounded-md border mix-blend-darken shadow-lg transition-colors hover:bg-slate-200 active:outline active:outline-1 lg:rounded-lg 2xl:rounded-xl"
+      className="relative flex flex-col items-center justify-center overflow-hidden rounded-md border shadow-lg transition-colors hover:bg-slate-200 active:outline active:outline-1 lg:rounded-lg 2xl:rounded-xl"
       to={id.toString()}
     >
       <div>

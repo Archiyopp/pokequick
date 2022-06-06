@@ -88,7 +88,7 @@ export interface PokemonByTypeQueryResult {
 export interface PokemonByGenderQueryResult {
   name: string;
   id: number;
-  pokemon_species: {
+  pokemon_species_details: {
     pokemon_species: NameUrl;
     rate: number;
   }[];

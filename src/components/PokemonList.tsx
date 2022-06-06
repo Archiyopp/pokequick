@@ -2,6 +2,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 import { useAppSelector, useAppDispatch, useGetPokemons } from "../hooks";
 import {
   incrementNumberOfVisiblePokemons,
+  selectGenderFilter,
   selectSearchFilter,
   selectTypeFilter,
 } from "../slices/filterSlice";
@@ -21,11 +22,13 @@ export function PokemonList() {
     numberOfVisiblePokemons,
     isError,
     typeQueryTrigger,
+    genderQueryTrigger,
   } = useGetPokemons();
   const dispatch = useAppDispatch();
   const searchFilter = useAppSelector(selectSearchFilter);
   const typeId = useAppSelector((state) => state.ids.filter);
   const typeFilter = useAppSelector(selectTypeFilter);
+  const genderFilter = useAppSelector(selectGenderFilter);
 
   // trigger in this component, when typeFilter changes, cant trigger on TypeFilter component
   // because it doesnt work, not sure why
@@ -34,6 +37,12 @@ export function PokemonList() {
       typeQueryTrigger(typeId, true);
     }
   }, [typeId]);
+
+  useEffect(() => {
+    if (genderFilter !== "all") {
+      genderQueryTrigger(genderFilter, true);
+    }
+  }, [genderFilter]);
 
   if (isLoading)
     return (

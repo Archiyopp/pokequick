@@ -8,6 +8,7 @@ import {
 } from "./slices/filterSlice";
 import {
   useGetPokemonsQuery,
+  useLazyGetPokemonsByGenderQuery,
   useLazyGetPokemonsByTypeQuery,
 } from "./services/pokemon";
 
@@ -41,33 +42,60 @@ export const useGetPokemons = () => {
     },
   ] = useLazyGetPokemonsByTypeQuery();
 
-  const objectWithPokemonNames: { [pokemon: string]: boolean } = {};
+  const [
+    genderQueryTrigger,
+    {
+      data: pokemonsByGenderData,
+      isLoading: pokemonByGenderLoading,
+      isError: pokemonByGenderError,
+      isFetching: pokemonByGenderFetching,
+    },
+  ] = useLazyGetPokemonsByGenderQuery();
+
+  const objectWithPokemonNames: {
+    [pokemon: string]: { type: boolean; gender: boolean; color: boolean };
+  } = {};
+
+  const getInitObj = () => ({ type: false, gender: false, color: false });
 
   if (typeFilter && pokemonsByTypeData) {
     for (const pokemon of pokemonsByTypeData.pokemon) {
-      objectWithPokemonNames[pokemon.pokemon.name] = true;
+      if (!objectWithPokemonNames[pokemon.pokemon.name]) {
+        objectWithPokemonNames[pokemon.pokemon.name] = getInitObj();
+      }
+      objectWithPokemonNames[pokemon.pokemon.name].type = true;
+    }
+  }
+
+  if (genderFilter !== "all" && pokemonsByGenderData) {
+    for (const pokemon of pokemonsByGenderData.pokemon_species_details) {
+      if (!objectWithPokemonNames[pokemon.pokemon_species.name]) {
+        objectWithPokemonNames[pokemon.pokemon_species.name] = getInitObj();
+      }
+      objectWithPokemonNames[pokemon.pokemon_species.name].gender = true;
     }
   }
 
   const initialPokemons = pokemonData?.pokemon_entries;
 
   const filteredPokemons = initialPokemons?.filter((entry) => {
+    const name = entry.pokemon_species.name;
+
     if (typeFilter && pokemonsByTypeData) {
-      if (!objectWithPokemonNames[entry.pokemon_species.name]) {
-        return false;
-      }
+      if (!objectWithPokemonNames[name]?.type) return false;
+    }
+
+    if (genderFilter !== "all" && pokemonsByGenderData) {
+      if (!objectWithPokemonNames[name]?.gender) return false;
     }
 
     if (Number.isNaN(Number.parseInt(searchFilter))) {
-      return entry.pokemon_species.name
-        .toLowerCase()
-        .includes(searchFilter.toLowerCase());
+      return name.toLowerCase().includes(searchFilter.toLowerCase());
     }
     return entry.entry_number.toString().includes(searchFilter);
   });
 
   const pokemons = filteredPokemons?.slice(0, numberOfVisiblePokemons);
-  console.log(filteredPokemons?.length);
 
   const isLoading = isLoadingPokemon || pokemonsByTypeLoading;
   const isError = isPokemonError || pokemonsByTypeError;
@@ -79,6 +107,7 @@ export const useGetPokemons = () => {
     filteredPokemons,
     numberOfVisiblePokemons,
     typeQueryTrigger,
+    genderQueryTrigger,
     pokemonsByTypeData,
     isFetching,
   };

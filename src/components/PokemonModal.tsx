@@ -99,12 +99,12 @@ export function PokemonModal() {
                       <tbody className="divide-y divide-gray-300">
                         <PokemonTableRow
                           category="Height"
-                          value={pokemonData.height}
+                          value={pokemonData.height / 10}
                           valueLabel="m"
                         />
                         <PokemonTableRow
                           category="Weight"
-                          value={pokemonData.weight}
+                          value={pokemonData.weight / 10}
                           valueLabel="kg"
                         />
                         <PokemonTableRow

@@ -32,6 +32,7 @@ function ColorButton({ color }: ColorProps) {
       className={`h-7 w-7 rounded-sm shadow-md ${
         color === colorFilter ? "scale-125 outline" : "opacity-80"
       }`}
+      title={color}
       style={{ backgroundColor: color }}
       onClick={() => dispatch(changeColor(color))}
     ></button>

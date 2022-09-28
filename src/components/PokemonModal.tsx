@@ -30,7 +30,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export function PokemonModal() {
   const pokemonId = useParams()?.id;
-  const navigate = useNavigate();
 
   if (!pokemonId || Number.isNaN(Number.parseInt(pokemonId))) return null;
 
@@ -64,15 +63,10 @@ export function PokemonModal() {
           )}.png`}
           width="475"
           height="475"
+          alt=""
         />
         <div>
-          <button
-            className="float-right translate-x-3 rounded-full text-gray-400 transition-colors hover:text-gray-500 focus:outline"
-            type="button"
-            onClick={() => navigate("/")}
-          >
-            <AiFillCloseCircle className="text-xl" />
-          </button>
+          <ModalCloseButton />
           {isLoading ? (
             <MyLoader />
           ) : (
@@ -195,6 +189,20 @@ export function PokemonModal() {
   );
 }
 
+function ModalCloseButton() {
+  const navigate = useNavigate();
+  return (
+    <button
+      className="float-right translate-x-3 rounded-full text-gray-400 transition-colors hover:text-gray-500 focus:outline"
+      type="button"
+      title="Close"
+      onClick={() => navigate("/")}
+    >
+      <AiFillCloseCircle className="text-xl" />
+    </button>
+  );
+}
+
 function PokemonEvolution({ id }: { id: string }) {
   const {
     data: evolutionChain,
@@ -266,23 +274,23 @@ function PokemonAvatar({
 }) {
   return (
     <div className="flex flex-col items-center">
-      <Link
-        className="block h-32 w-32 rounded-full border-4 border-bwhite p-2 shadow-md"
-        to={`/${pokemonId}`}
-      >
-        <img
-          src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId.padStart(
-            3,
-            "0"
-          )}.png`}
-          height="215"
-          width="215"
-        />
+      <Link to={`/${pokemonId}`} className="flex flex-col items-center">
+        <div className="block h-32 w-32 rounded-full border-4 border-bwhite p-2 shadow-md">
+          <img
+            src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId.padStart(
+              3,
+              "0"
+            )}.png`}
+            height="215"
+            width="215"
+            alt=""
+          />
+        </div>
+        <p className="text-lg capitalize text-gray-200">
+          {name}{" "}
+          <span className="text-gray-300">#{pokemonId.padStart(3, "0")}</span>
+        </p>
       </Link>
-      <p className="text-lg capitalize text-gray-200">
-        {name}{" "}
-        <span className="text-gray-300">#{pokemonId.padStart(3, "0")}</span>
-      </p>
     </div>
   );
 }

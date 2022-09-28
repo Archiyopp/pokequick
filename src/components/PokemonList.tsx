@@ -110,6 +110,7 @@ function PokemonCard({ id, name }: PokemonProps) {
           src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${idParam}.png`}
           height="215"
           width="215"
+          alt=""
         />
       </div>
       <span className="absolute inset-x-0 bottom-0 h-2  bg-gradient-to-r from-poke-blue via-poke-yellow to-poke-red"></span>

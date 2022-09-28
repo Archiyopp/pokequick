@@ -1,12 +1,12 @@
 import { Header } from "./components/Header";
-import { RoutesProvider } from "./routes";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
     <div className="h-full w-full bg-bwhite text-gray-800">
       <Header />
       <main className="flex justify-center">
-        <RoutesProvider />
+        <Home />
       </main>
     </div>
   );

@@ -17,6 +17,7 @@ export function Home() {
           <PokemonList />
         </section>
       </div>
+      <Outlet />
     </div>
   );
 }
@@ -42,7 +43,6 @@ function FilterSection() {
           </button>
         </div>
       </div>
-      <Outlet />
     </section>
   );
 }

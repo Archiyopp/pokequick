@@ -62,12 +62,7 @@ export const useGetPokemons = () => {
 
   const [
     colorQueryTrigger,
-    {
-      data: pokemonsByColorData,
-      isLoading: pokemonByColorLoading,
-      isError: pokemonByColorError,
-      isFetching: pokemonByColorFetching,
-    },
+    { data: pokemonsByColorData, isLoading: pokemonByColorLoading },
   ] = useLazyGetPokemonsByColorQuery();
 
   const objectWithPokemonNames: {

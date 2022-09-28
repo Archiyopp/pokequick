@@ -1,9 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import ContentLoader from "react-content-loader";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, LoaderFunction, useNavigate, useParams } from "react-router-dom";
 import { EvolutionChain, PokemonSpecies } from "../services/types";
 import {
+  pokemonApi,
   useGetPokemonByIdQuery,
   useGetPokemonEvolutionByIdQuery,
   useGetPokemonSpeciesByIdQuery,
@@ -11,6 +12,21 @@ import {
 import { TYPES_COLORS } from "../constants";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useDocumentTitle } from "../hooks";
+import { store } from "../store";
+
+export const loader: LoaderFunction = async ({ params }) => {
+  const { id } = params;
+  store.dispatch(
+    pokemonApi.util.prefetch("getPokemonById", id ?? "1", {
+      force: false,
+    })
+  );
+  store.dispatch(
+    pokemonApi.util.prefetch("getPokemonSpeciesById", id ?? "1", {
+      force: false,
+    })
+  );
+};
 
 export function PokemonModal() {
   const pokemonId = useParams()?.id;
